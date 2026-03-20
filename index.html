@@ -1,25 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Trash-A-Thon Games Leaderboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f9f9f7; color: #1a1a1a; }
+  .sb-wrap { padding: 1.5rem 1rem 2rem; max-width: 680px; margin: 0 auto; }
+  .sb-header { text-align: center; margin-bottom: 1.5rem; }
+  .sb-title { font-size: 13px; font-weight: 500; letter-spacing: 0.08em; color: #666; text-transform: uppercase; margin-bottom: 4px; }
+  .sb-event { font-size: 22px; font-weight: 500; color: #1a1a1a; }
+  .sb-updated { font-size: 12px; color: #999; margin-top: 6px; }
+  .team-grid { display: flex; flex-direction: column; gap: 10px; }
+  .team-card { border-radius: 12px; border: 0.5px solid #e0e0e0; background: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 14px; }
+  .team-card.rank-1 { border: 1.5px solid #1D9E75; }
+  .rank-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .rank-1-badge { background: #E1F5EE; color: #0F6E56; }
+  .rank-other-badge { background: #f2f2f2; color: #888; }
+  .team-emoji { font-size: 28px; flex-shrink: 0; line-height: 1; }
+  .team-info { flex: 1; min-width: 0; }
+  .team-name { font-size: 15px; font-weight: 500; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-class { font-size: 12px; color: #888; margin-top: 2px; }
+  .points-block { text-align: right; flex-shrink: 0; }
+  .points-num { font-size: 28px; font-weight: 500; line-height: 1; }
+  .points-label { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .leader-tag { font-size: 11px; font-weight: 500; background: #E1F5EE; color: #0F6E56; border-radius: 20px; padding: 2px 8px; margin-left: 8px; white-space: nowrap; }
+  .divider { height: 0.5px; background: #e8e8e8; margin: 1.25rem 0; }
+  .challenges-section { margin-top: 1rem; }
+  .challenges-title { font-size: 12px; font-weight: 500; color: #888; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+  .challenge-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid #f0f0f0; gap: 12px; }
+  .challenge-row:last-child { border-bottom: none; }
+  .challenge-name { font-size: 13px; color: #1a1a1a; flex: 1; }
+  .challenge-pts { font-size: 12px; font-weight: 500; color: #0F6E56; white-space: nowrap; }
+  .won-by { font-size: 11px; background: #f2f2f2; color: #888; border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
+  .won-by.available { color: #bbb; font-style: italic; }
+  .won-by.open { background: #E1F5EE; color: #0F6E56; }
+  .edit-note { margin-top: 1.5rem; font-size: 12px; color: #bbb; text-align: center; line-height: 1.6; }
+  .edit-note code { font-family: monospace; font-size: 11px; background: #f2f2f2; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="sb-wrap">
+  <div class="sb-header">
+    <div class="sb-title">2026 Trash-A-Thon Games</div>
+    <div class="sb-event">Leaderboard</div>
+    <div class="sb-updated" id="updated-date"></div>
+  </div>
 
-<!doctype html><html data-build-id="7b90de112a" data-git-hash="456b13de6bf5c5013fd09fbfc657137b90de112a" data-build-timestamp="1773974979" data-version="1.0.0" data-env="" lang="en" data-theme="claude" data-mode="light" data-p4n="true" class="h-screen antialiased scroll-smooth"><head data-ion-ip-country="US">
-  <meta http-equiv="Content-Security-Policy" content="script-src &#39;self&#39; a-cdn.claude.ai assets.claude.ai assets-proxy.anthropic.com a-cdn.anthropic.com s-cdn.anthropic.com https://js.intercomcdn.com https://widget.intercom.io https://snippet.maze.co https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://js.hs-scripts.com https://js.stripe.com https://accounts.google.com/gsi/client https://maps.googleapis.com https://maps.gstatic.com &#39;sha256-b4iGKa1gRzQRuhyXmsPfZZ/42P+G4RH9lRD3FgMjSTw=&#39; &#39;sha256-nZ7LmkxxiOzWDppvgAZ5j+1BqmvXzwveHNjkOR3s9BQ=&#39; &#39;sha256-IoI9DMl3oJ5dLKooWtrM8kjGyW7xA57KfxjgV0wmwSE=&#39; &#39;wasm-unsafe-eval&#39;; object-src &#39;none&#39;; base-uri &#39;none&#39;; block-all-mixed-content; img-src &#39;self&#39; data: blob: *.anthropic.com *.claude.ai *.claude.com *.gstatic.com * https://js.intercomcdn.com https://static.intercomassets.com https://downloads.intercomcdn.com https://downloads.intercomcdn.eu https://downloads.au.intercomcdn.com https://uploads.intercomusercontent.com https://gifs.intercomcdn.com https://video-messages.intercomcdn.com https://messenger-apps.intercom.io https://messenger-apps.eu.intercom.io https://messenger-apps.au.intercom.io https://*.intercom-attachments-1.com https://*.intercom-attachments.eu https://*.au.intercom-attachments.com https://*.intercom-attachments-2.com https://*.intercom-attachments-3.com https://*.intercom-attachments-4.com https://*.intercom-attachments-5.com https://*.intercom-attachments-6.com https://*.intercom-attachments-7.com https://*.intercom-attachments-8.com https://*.intercom-attachments-9.com https://static.intercomassets.eu https://static.au.intercomassets.com; frame-src &#39;self&#39; a-cdn.claude.ai a.claude.ai b.stripecdn.com embedded-dashboards.metronome.com forms.hsforms.com googletagmanager.com js.stripe.com m.stripe.network newassets.hcaptcha.com pay.google.com r.stripe.com www.google.com accounts.google.com www.youtube-nocookie.com https://intercom-sheets.com https://www.intercom-reporting.com https://www.youtube.com https://player.vimeo.com https://fast.wistia.net https://www.claudeusercontent.com https://www.claudemcpclient.com *.claudemcpcontent.com https://claude.ai *.livepreview.claude.ai *.livepreview.claude.app; font-src &#39;self&#39; assets.claude.ai assets-proxy.anthropic.com https://js.intercomcdn.com https://fonts.intercomcdn.com; form-action &#39;self&#39; https://forms.hsforms.com https://intercom.help https://api-iam.intercom.io https://api-iam.eu.intercom.io https://api-iam.au.intercom.io; media-src &#39;self&#39; cdn.sanity.io https://assets.claude.ai https://assets-proxy.anthropic.com https://js.intercomcdn.com https://downloads.intercomcdn.com https://downloads.intercomcdn.eu https://downloads.au.intercomcdn.com; upgrade-insecure-requests; worker-src &#39;self&#39; blob: a-cdn.claude.ai assets.claude.ai assets-proxy.anthropic.com a-cdn.anthropic.com s-cdn.anthropic.com">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Claude</title><meta name="description" content="Claude is Anthropic's AI, built for problem solvers. Tackle complex challenges, analyze data, write code, and think through your hardest work."><meta name="apple-itunes-app" content="app-id=6473753684"><meta property="og:type" content="website"><meta property="og:site_name" content="Claude"><meta property="og:image" content="https://claude.ai/images/claude_ogimage.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cd02a42d9-Vq_H3mgS.svg"><link rel="icon" type="image/png" sizes="32x32" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/ce67964e7-CAX1bqSh.png"><link rel="icon" type="image/png" sizes="16x16" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c03e51811-DebilQLI.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c129d018a-jJjJELY8.png"><link rel="apple-touch-startup-image" href="/images/claude_app_icon.png"><link rel="manifest" href="/manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-CFxw3nG7.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c66fc489e-C-BHYa_K.woff2" as="font" type="font/woff2" crossorigin><script>void 0===globalThis.process&&(globalThis.process={env:{},cwd:function(){return"/"}}),void 0===globalThis.global&&(globalThis.global=globalThis)</script><script type="application/ld+json">{
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "name": "Claude",
-            "alternateName": ["Claude.ai", "Claude by Anthropic"],
-            "url": "https://claude.com"
-          },
-          {
-            "@type": "Organization",
-            "name": "Anthropic",
-            "url": "https://www.anthropic.com",
-            "logo": "https://claude.ai/images/claude_ogimage.png",
-            "sameAs": [
-              "https://x.com/AnthropicAI",
-              "https://www.linkedin.com/company/anthropic",
-              "https://www.youtube.com/@anthropic-ai"
-            ]
-          }
-        ]
-      }</script><script>!function(){try{performance.mark?.("rq_cache:preload_start");const e="keyval-store",o="keyval",r="react-query-cache",t=new Promise(t=>{if(!window.indexedDB)return void t(void 0);const c=indexedDB.open(e);c.onupgradeneeded=()=>{c.transaction?.abort()},c.onerror=()=>t(void 0),c.onsuccess=()=>{const a=c.result;if(!a.objectStoreNames.contains(o))return a.close(),indexedDB.deleteDatabase(e),void t(void 0);try{const e=a.transaction(o,"readonly").objectStore(o).get(r);e.onerror=()=>{a.close(),t(void 0)},e.onsuccess=()=>{a.close(),window.__PRELOADED_IDB_CACHE_RESULT__=e.result,t(e.result)}}catch{a.close(),t(void 0)}}});window.__PRELOADED_IDB_CACHE__=t,performance.measure?.("rq_cache:preload_exec",{start:"rq_cache:preload_start"})}catch{}}()</script><script type="module" crossorigin src="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/index-CtnBcqXp.js"></script><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-CffVdL_0.js"><link rel="modulepreload" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/tree-sitter-IiVGz5_q.js"><link rel="stylesheet" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c6a992d55-DSBx4un9.css"></head><body class="bg-bg-100 text-text-100 font-ui min-h-screen"><div id="root"></div><script nonce="wrZjhtG0ikHpliiTmZeO8A==">(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.nonce='wrZjhtG0ikHpliiTmZeO8A==';d.innerHTML="window.__CF$cv$params={r:'9df58dba0d03d704',t:'MTc3NDAxODQ4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='wrZjhtG0ikHpliiTmZeO8A==';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+  <div class="team-grid" id="team-grid"></div>
+
+  <div class="divider"></div>
+
+  <div class="challenges-section">
+    <div class="challenges-title">Challenges</div>
+    <div id="challenges-list"></div>
+  </div>
+
+  <div class="edit-note">To update: edit the <code>SCORES</code> and <code>CHALLENGES</code> sections at the top of this file.</div>
+</div>
+
+<script>
+
+/* ============================================================
+   EDIT THESE TWO SECTIONS TO UPDATE THE SCOREBOARD
+   ============================================================ */
+
+const UPDATED = "March 20, 2026"; // Update this date each time you save
+
+// Scores in order: Tiny But Mighty Twos, Terrific Cleanup Turtles, K-Pop Trash Hunters, Super Planet Team
+const SCORES = [0, 0, 0, 0];
+
+// For each challenge, set winner to:
+//   null        = still up for grabs
+//   "all"       = all teams earned it (open bonus)
+//   "Team Name" = the name of the winning team
+const CHALLENGES = [
+  { name: "First class: 100% registered on Givebutter", pts: "1 pt", winner: null },
+  { name: "Quick-start bonus: class raises $375 by Mar 20", pts: "1 pt each", winner: "all" },
+  { name: "First class: hits class fundraising target", pts: "1 pt", winner: null },
+  { name: "First class in lead when school hits midpoint goal", pts: "1 pt", winner: null },
+  { name: "First class to push school over fundraising goal", pts: "2 pts", winner: null },
+  { name: "Game day: best team spirit (guest judge)", pts: "1 pt", winner: null },
+  { name: "Game day: adult relay race participation bonus", pts: "1 pt", winner: null },
+];
+
+/* ============================================================
+   DON'T EDIT BELOW THIS LINE
+   ============================================================ */
+
+const TEAMS = [
+  { name: "Tiny But Mighty Twos",     cls: "2s",        emoji: "🦄", color: "#E8A317" },
+  { name: "Terrific Cleanup Turtles", cls: "3s",        emoji: "🐢", color: "#D4695A" },
+  { name: "K-Pop Trash Hunters",      cls: "3/4s",      emoji: "🎤", color: "#5AABCD" },
+  { name: "Super Planet Team",        cls: "4s / Pre-K", emoji: "🌍", color: "#52B788" },
+];
+
+document.getElementById("updated-date").textContent = "Last updated: " + UPDATED;
+
+const ranked = TEAMS.map((t, i) => ({ ...t, pts: SCORES[i], idx: i }))
+  .sort((a, b) => b.pts - a.pts || a.idx - b.idx)
+  .map((t, rank) => ({ ...t, rank: rank + 1 }));
+
+const grid = document.getElementById("team-grid");
+ranked.forEach(t => {
+  const card = document.createElement("div");
+  card.className = "team-card" + (t.rank === 1 && t.pts > 0 ? " rank-1" : "");
+  card.innerHTML = `
+    <div class="rank-badge ${t.rank === 1 && t.pts > 0 ? 'rank-1-badge' : 'rank-other-badge'}">${t.rank}</div>
+    <div class="team-emoji">${t.emoji}</div>
+    <div class="team-info">
+      <div class="team-name">${t.name}${t.rank === 1 && t.pts > 0 ? '<span class="leader-tag">Leading</span>' : ''}</div>
+      <div class="team-class">${t.cls}</div>
+    </div>
+    <div class="points-block">
+      <div class="points-num" style="color:${t.color}">${t.pts}</div>
+      <div class="points-label">${t.pts === 1 ? "point" : "points"}</div>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+const challengesList = document.getElementById("challenges-list");
+CHALLENGES.forEach(c => {
+  const row = document.createElement("div");
+  row.className = "challenge-row";
+  let wonHtml;
+  if (c.winner === "all") {
+    wonHtml = `<span class="won-by open">open to all</span>`;
+  } else if (c.winner) {
+    wonHtml = `<span class="won-by">${c.winner}</span>`;
+  } else {
+    wonHtml = `<span class="won-by available">up for grabs</span>`;
+  }
+  row.innerHTML = `
+    <div class="challenge-name">${c.name}</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <span class="challenge-pts">${c.pts}</span>
+      ${wonHtml}
+    </div>
+  `;
+  challengesList.appendChild(row);
+});
+</script>
+</body>
+</html>
